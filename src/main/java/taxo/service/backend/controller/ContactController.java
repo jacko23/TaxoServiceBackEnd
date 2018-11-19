@@ -1,28 +1,39 @@
-package taxo.service.backend.form;
+package taxo.service.backend.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import taxo.service.backend.model.Contact;
+import taxo.service.backend.repository.ContactRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 
-import taxo.service.backend.bean.PersonalData;
+
+
+
 
 
 
 @RestController
-public class ContactController {
+public class ContactController {	
+	
+
+	@Autowired
+	private ContactRepository contactRepository;
 	
 	private static final Log LOG = LogFactory.getLog(ContactController.class);
 	
+	
+	
 	@GetMapping("/showcontacts")
-	private PersonalData showContacts() throws ParseException {
+	private Flux<Contact> showContacts() {
 		
-		
-		PersonalData utente = new PersonalData();
+		/*
+		Contact utente = new ---------------Contact();
 		
 		//String dataString = sdf.format(new Date());
 		
@@ -34,23 +45,10 @@ public class ContactController {
 		utente.setBirthPlaceProvince("Milano");
 		utente.setBirthPlaceCountry("Italia");
 		utente.setGender("Femina");
-		return utente;
-	}
-	
-	private Date convertDateLocale(String data) {
+		*/
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date dateResponse = new Date();
-		try {
-			
-			 dateResponse = sdf.parse(data);
-			 
-		} catch (ParseException e) {
-
-			e.printStackTrace();
-		}
+		LOG.debug("I dati sono stati registrati");
 		
-		return dateResponse;
+		return contactRepository.findAll();
 	}
-
 }

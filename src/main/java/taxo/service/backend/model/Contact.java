@@ -1,9 +1,14 @@
-package taxo.service.backend.bean;
+package taxo.service.backend.model;
 
-import java.util.Date;
+import java.io.Serializable;
 
-public class PersonalData {
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document
+public class Contact implements Serializable {
+	@Id
+	private String id;
 	private String firstName;
 	private String surname;
 	private String dataOfBirth;
@@ -11,6 +16,15 @@ public class PersonalData {
 	private String birthPlaceProvince;
 	private String birthPlaceCountry;
 	private String Gender;
+	
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -67,6 +81,4 @@ public class PersonalData {
 	public void setDataOfBirth(String dataOfBirth) {
 		this.dataOfBirth = dataOfBirth;
 	}
-	
-	
 }
