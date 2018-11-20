@@ -6,10 +6,6 @@ import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.coyote.http11.Http11AprProtocol;
-
-import taxo.service.backend.model.Contact;
-import taxo.service.backend.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,44 +15,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-
-
-
-
+import taxo.service.backend.model.Contact;
+import taxo.service.backend.repository.ContactRepository;
 
 
 @RestController
 public class ContactController {	
 	
-
 	@Autowired
 	private ContactRepository contactRepository;
 	
 	private static final Log LOG = LogFactory.getLog(ContactController.class);
 	
-	
-	
 	@GetMapping("/showcontacts")
 	private Flux<Contact> showContacts() {
-		
-		/*
-		Contact utente = new ---------------Contact();
-		
-		//String dataString = sdf.format(new Date());
-		
-		utente.setFirstName("Benedetta");
-		utente.setSurname("Polaca");
-		String dataBirth = "23/03/1990";
-		utente.setDataOfBirth(dataBirth);
-		utente.setBirthPlaceCity("Milano");
-		utente.setBirthPlaceProvince("Milano");
-		utente.setBirthPlaceCountry("Italia");
-		utente.setGender("Femina");
-		*/
-		
+			
 		LOG.debug("I dati sono stati registrati");
 		
 		return contactRepository.findAll();
@@ -64,6 +40,7 @@ public class ContactController {
 	
 	@PostMapping("/contact")
 	public Mono<Contact> createContact(@Valid @RequestBody Contact contact){
+		
 		return contactRepository.save(contact);
 	}
 	
@@ -86,4 +63,5 @@ public class ContactController {
 					)
 					.defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
+	
 }
